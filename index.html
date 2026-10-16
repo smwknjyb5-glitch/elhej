@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>   
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -6,122 +6,33 @@
 <title>قرعة الحج</title>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #e8f5e9, #fff8e1);
-        margin: 0;
-        padding: 20px;
-        text-align: center;
-    }
-
-    h1 {
-        color: #176b3a;
-        margin-bottom: 5px;
-    }
-
-    .subtitle {
-        color: #555;
-        margin-bottom: 20px;
-    }
-
-    .box {
-        background: white;
-        max-width: 900px;
-        margin: auto;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px #0002;
-    }
-
-    input {
-        padding: 10px;
-        margin: 5px;
-        border: 1px solid #aaa;
-        border-radius: 8px;
-        font-size: 16px;
-    }
-
-    button {
-        padding: 11px 20px;
-        margin: 7px;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-        background: #1976d2;
-        color: white;
-    }
-
-    button:hover {
-        opacity: 0.85;
-    }
-
-    .add {
-        background: #388e3c;
-    }
-
-    .draw {
-        background: #d84315;
-        font-size: 20px;
-        padding: 15px 35px;
-    }
-
-    .reset {
-        background: #555;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        border: 1px solid #ddd;
-        padding: 10px;
-    }
-
-    th {
-        background: #176b3a;
-        color: white;
-    }
-
-    .tickets {
-        color: #d84315;
-        font-weight: bold;
-    }
-
-    .winner {
-        margin-top: 25px;
-        padding: 20px;
-        background: #fff3cd;
-        border: 3px solid #ffc107;
-        border-radius: 15px;
-        font-size: 25px;
-        font-weight: bold;
-        color: #8a5a00;
-        min-height: 35px;
-    }
-
-    .results {
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .result {
-        background: #e8f5e9;
-        border: 2px solid #4caf50;
-        border-radius: 10px;
-        padding: 12px 20px;
-        font-weight: bold;
-    }
-
-    .counter {
-        margin: 15px;
-        font-size: 18px;
+    body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #e8f5e9, #fff8e1); margin: 0; padding: 20px; text-align: center; }
+    h1 { color: #176b3a; margin-bottom: 5px; }
+    .subtitle { color: #555; margin-bottom: 20px; }
+    .box { background: white; max-width: 900px; margin: auto; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px #0002; }
+    input { padding: 10px; margin: 5px; border: 1px solid #aaa; border-radius: 8px; font-size: 16px; }
+    button { padding: 11px 20px; margin: 7px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; background: #1976d2; color: white; }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .add { background: #388e3c; }
+    .draw { background: #d84315; font-size: 20px; padding: 15px 35px; }
+    .reset { background: #555; }
+    .save { background: #6a1b9a; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 10px; }
+    th { background: #176b3a; color: white; }
+    .tickets { color: #d84315; font-weight: bold; }
+    .winner { margin-top: 25px; padding: 20px; background: #fff3cd; border: 3px solid #ffc107; border-radius: 15px; font-size: 25px; font-weight: bold; color: #8a5a00; min-height: 35px; }
+    .results { margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .result { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 10px; padding: 12px 20px; font-weight: bold; }
+    .counter { margin: 15px; font-size: 18px; }
+    .warn { display: none; margin: 10px auto; padding: 10px; max-width: 600px; background: #fff3e0; border: 2px solid #fb8c00; border-radius: 10px; color: #8a4b00; font-weight: bold; }
+    .opt { display: inline-block; margin: 5px 10px; font-size: 15px; }
+    .progress { margin-top: 10px; color: #176b3a; font-weight: bold; }
+    @media print {
+        body { background: white; padding: 0; }
+        .box { box-shadow: none; }
+        .noprint { display: none !important; }
     }
 </style>
 </head>
@@ -131,38 +42,29 @@
 <div class="box">
 
     <h1>🎟️ قرعة الحج</h1>
-    <div class="subtitle">
-        القرعة حسب أقدمية التسجيل
+    <div class="subtitle">القرعة حسب أقدمية التسجيل</div>
+
+    <div class="noprint">
+        <h3>إضافة المسجلين</h3>
+
+        <input type="text" id="nameInput" placeholder="اسم الشخص">
+        <input type="number" id="yearsInput" placeholder="سنوات التسجيل" min="1" value="1">
+        <button class="add" id="addBtn" onclick="addPerson()">➕ إضافة</button>
+
+        <br>
+
+        <label>
+            عدد الفائزين:
+            <input type="number" id="winnerCount" min="1" value="3" style="width:70px" oninput="checkRatio()">
+        </label>
+
+        <label class="opt">
+            <input type="checkbox" id="allowOver" onchange="checkRatio()" style="margin:0 0 0 6px">
+            قبول العدد المقترح حتى لو تجاوز 50% من المسجلين
+        </label>
+
+        <div class="warn" id="ratioWarn"></div>
     </div>
-
-    <h3>إضافة المسجلين</h3>
-
-    <input type="text" id="nameInput" placeholder="اسم الشخص">
-
-    <input
-        type="number"
-        id="yearsInput"
-        placeholder="سنوات التسجيل"
-        min="1"
-        value="1"
-    >
-
-    <button class="add" onclick="addPerson()">
-        ➕ إضافة
-    </button>
-
-    <br>
-
-    <label>
-        عدد الفائزين:
-        <input
-            type="number"
-            id="winnerCount"
-            min="1"
-            value="3"
-            style="width:70px"
-        >
-    </label>
 
     <div class="counter">
         عدد المسجلين:
@@ -181,215 +83,254 @@
                 <th>عدد الأوراق</th>
             </tr>
         </thead>
-
-        <tbody id="peopleTable">
-        </tbody>
+        <tbody id="peopleTable"></tbody>
     </table>
 
     <br>
 
-    <button class="draw" onclick="drawWinner()">
-        🎲 إجراء القرعة
-    </button>
-
-    <button class="reset" onclick="resetLottery()">
-        🔄 إعادة القرعة
-    </button>
-
-    <div class="winner" id="currentWinner">
-        في انتظار القرعة...
+    <div class="noprint">
+        <button class="draw" id="drawBtn" onclick="drawWinner()">🎲 إجراء القرعة</button>
+        <button class="reset" onclick="resetLottery()">🔄 إعادة القرعة</button>
     </div>
+
+    <div class="winner noprint" id="currentWinner">في انتظار القرعة...</div>
+    <div class="progress" id="progress"></div>
 
     <h3>🏆 الفائزون</h3>
 
-    <div class="results" id="results">
+    <div class="results" id="results"></div>
+
+    <div class="noprint" style="margin-top:20px">
+        <button class="save" onclick="downloadTXT()">💾 حفظ (نص TXT)</button>
+        <button class="save" onclick="downloadCSV()">📊 حفظ (Excel / CSV)</button>
+        <button class="save" onclick="printWinners()">🖨️ طباعة / حفظ PDF</button>
     </div>
 
 </div>
 
 <script>
 
-let people = [];
+let people = [];          // المسجلون المتبقون
+let winners = [];         // الفائزون {name, years, drawnAt}
+let nextId = 1;
+let totalRegistered = 0;  // عدد المسجلين عند بداية القرعة
+let busy = false;
+
+function esc(s) {
+    return String(s).replace(/[&<>"']/g, function(c) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+}
+
+// عدد المسجلين المرجعي لحساب النسبة
+function baseTotal() {
+    return winners.length > 0 ? totalRegistered : people.length;
+}
 
 // إضافة شخص
 function addPerson() {
 
+    if (winners.length > 0) {
+        alert("بدأت القرعة، لا يمكن إضافة مسجلين جدد. اضغط «إعادة القرعة» للبدء من جديد.");
+        return;
+    }
+
     let name = document.getElementById("nameInput").value.trim();
     let years = parseInt(document.getElementById("yearsInput").value);
 
-    if (name === "") {
-        alert("أدخل اسم الشخص");
-        return;
-    }
+    if (name === "") { alert("أدخل اسم الشخص"); return; }
+    if (isNaN(years) || years < 1) { alert("أدخل عدد سنوات صحيح"); return; }
 
-    if (isNaN(years) || years < 1) {
-        alert("أدخل عدد سنوات صحيح");
-        return;
-    }
-
-    people.push({
-        name: name,
-        years: years
-    });
+    people.push({ id: nextId++, name: name, years: years });
 
     document.getElementById("nameInput").value = "";
     document.getElementById("yearsInput").value = "1";
 
     updateTable();
+    checkRatio();
 }
-
 
 // تحديث الجدول
 function updateTable() {
 
     let table = document.getElementById("peopleTable");
-
     table.innerHTML = "";
-
     let totalTickets = 0;
 
     people.forEach(function(person, index) {
-
         totalTickets += person.years;
-
         let row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${person.name}</td>
-            <td>${person.years}</td>
-            <td class="tickets">${person.years}</td>
-        `;
-
+        row.innerHTML =
+            "<td>" + (index + 1) + "</td>" +
+            "<td>" + esc(person.name) + "</td>" +
+            "<td>" + person.years + "</td>" +
+            '<td class="tickets">' + person.years + "</td>";
         table.appendChild(row);
     });
 
-    document.getElementById("peopleCount").textContent =
-        people.length;
-
-    document.getElementById("ticketCount").textContent =
-        totalTickets;
+    document.getElementById("peopleCount").textContent = people.length;
+    document.getElementById("ticketCount").textContent = totalTickets;
 }
 
+// عرض تنبيه عند تجاوز 50%
+function checkRatio() {
+    let n = parseInt(document.getElementById("winnerCount").value);
+    let total = baseTotal();
+    let warn = document.getElementById("ratioWarn");
+    let allow = document.getElementById("allowOver").checked;
+
+    if (!isNaN(n) && total > 0 && n <= total && n > total / 2) {
+        let pct = Math.round(n / total * 100);
+        warn.style.display = "block";
+        warn.textContent = allow
+            ? "⚠️ عدد الفائزين (" + n + ") يمثل " + pct + "% من المسجلين — تم قبول العدد."
+            : "⚠️ عدد الفائزين (" + n + ") يمثل " + pct + "% من المسجلين (يتجاوز 50%). فعّل الخيار أعلاه لقبوله.";
+    } else {
+        warn.style.display = "none";
+    }
+}
 
 // إنشاء صندوق القرعة
 function createTickets() {
-
     let tickets = [];
-
     people.forEach(function(person) {
-
-        for (let i = 0; i < person.years; i++) {
-
-            tickets.push(person);
-
-        }
-
+        for (let i = 0; i < person.years; i++) tickets.push(person);
     });
-
     return tickets;
 }
-
 
 // إجراء القرعة
 function drawWinner() {
 
-    let winnerNumber =
-        parseInt(document.getElementById("winnerCount").value);
+    if (busy) return;
 
-    if (people.length === 0) {
-        alert("أضف المسجلين أولاً");
+    let winnerNumber = parseInt(document.getElementById("winnerCount").value);
+
+    if (people.length === 0 && winners.length === 0) { alert("أضف المسجلين أولاً"); return; }
+    if (isNaN(winnerNumber) || winnerNumber < 1) { alert("حدد عدد الفائزين"); return; }
+
+    // تثبيت عدد المسجلين عند أول سحب
+    if (winners.length === 0) totalRegistered = people.length;
+
+    if (winnerNumber > totalRegistered) {
+        alert("عدد الفائزين أكبر من عدد المسجلين (" + totalRegistered + ")");
         return;
     }
 
-    if (winnerNumber < 1) {
-        alert("حدد عدد الفائزين");
-        return;
+    // التحقق من تجاوز 50%
+    if (winnerNumber > totalRegistered / 2 && !document.getElementById("allowOver").checked) {
+        let pct = Math.round(winnerNumber / totalRegistered * 100);
+        let ok = confirm(
+            "عدد الفائزين (" + winnerNumber + ") يمثل " + pct + "% من المسجلين، وهو يتجاوز 50%.\n\nهل تقبل هذا العدد وتتابع القرعة؟"
+        );
+        if (!ok) return;
+        document.getElementById("allowOver").checked = true;
+        checkRatio();
     }
 
-    if (winnerNumber > people.length) {
-        alert("عدد الفائزين أكبر من عدد المسجلين");
-        return;
-    }
-
-    // إذا وصلنا إلى عدد الفائزين المطلوب
-    let currentResults =
-        document.querySelectorAll(".result").length;
-
-    if (currentResults >= winnerNumber) {
+    if (winners.length >= winnerNumber) {
         alert("تم الوصول إلى عدد الفائزين المحدد");
         return;
     }
 
-    // إنشاء الأوراق الحالية
     let tickets = createTickets();
+    if (tickets.length === 0) { alert("لا توجد أوراق متبقية"); return; }
 
-    if (tickets.length === 0) {
-        alert("لا توجد أوراق متبقية");
-        return;
-    }
+    let selected = tickets[Math.floor(Math.random() * tickets.length)];
 
-    // اختيار ورقة عشوائية
-    let randomIndex =
-        Math.floor(Math.random() * tickets.length);
-
-    let selectedPerson =
-        tickets[randomIndex];
-
-    // عرض حركة السحب
-    let winnerBox =
-        document.getElementById("currentWinner");
-
+    let winnerBox = document.getElementById("currentWinner");
     winnerBox.textContent = "🎲 جاري السحب...";
+    busy = true;
 
     setTimeout(function() {
 
-        winnerBox.textContent =
-            "🏆 الفائز: " + selectedPerson.name;
+        winnerBox.textContent = "🏆 الفائز: " + selected.name;
 
-        // إضافة الفائز إلى النتائج
-        let result =
-            document.createElement("div");
-
-        result.className = "result";
-
-        result.textContent =
-            "🏆 " +
-            (currentResults + 1) +
-            " - " +
-            selectedPerson.name;
-
-        document.getElementById("results")
-            .appendChild(result);
-
-
-        /*
-          الأهم هنا:
-
-          نحذف الشخص الفائز كلياً
-          وليس ورقة واحدة فقط.
-        */
-
-        people = people.filter(function(person) {
-
-            return person.name !== selectedPerson.name;
-
+        winners.push({
+            name: selected.name,
+            years: selected.years,
+            drawnAt: new Date()
         });
 
+        let result = document.createElement("div");
+        result.className = "result";
+        result.textContent = "🏆 " + winners.length + " - " + selected.name;
+        document.getElementById("results").appendChild(result);
+
+        // حذف الفائز (حسب المعرّف الفريد وليس الاسم)
+        people = people.filter(function(p) { return p.id !== selected.id; });
+
         updateTable();
+
+        document.getElementById("progress").textContent =
+            "تم سحب " + winners.length + " من " + winnerNumber;
+
+        busy = false;
 
     }, 1200);
 }
 
+// ====== حفظ الفائزين ======
+
+function stamp() {
+    let d = new Date();
+    let p = function(n) { return String(n).padStart(2, "0"); };
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+}
+
+function saveBlob(content, filename, type) {
+    let blob = new Blob([content], { type: type });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+        URL.revokeObjectURL(a.href);
+        a.remove();
+    }, 500);
+}
+
+function hasWinners() {
+    if (winners.length === 0) {
+        alert("لا يوجد فائزون لحفظهم بعد");
+        return false;
+    }
+    return true;
+}
+
+function downloadTXT() {
+    if (!hasWinners()) return;
+    let lines = [];
+    lines.push("نتائج قرعة الحج");
+    lines.push("التاريخ: " + stamp());
+    lines.push("عدد المسجلين: " + totalRegistered);
+    lines.push("عدد الفائزين: " + winners.length);
+    lines.push("--------------------------");
+    winners.forEach(function(w, i) {
+        lines.push((i + 1) + " - " + w.name + " (سنوات التسجيل: " + w.years + ")");
+    });
+    saveBlob("\uFEFF" + lines.join("\r\n"), "الفائزون-" + stamp() + ".txt", "text/plain;charset=utf-8");
+}
+
+function downloadCSV() {
+    if (!hasWinners()) return;
+    let q = function(s) { return '"' + String(s).replace(/"/g, '""') + '"'; };
+    let rows = [["الرقم", "الاسم", "سنوات التسجيل", "وقت السحب"].map(q).join(",")];
+    winners.forEach(function(w, i) {
+        rows.push([i + 1, q(w.name), w.years, q(w.drawnAt.toLocaleTimeString("ar-DZ"))].join(","));
+    });
+    saveBlob("\uFEFF" + rows.join("\r\n"), "الفائزون-" + stamp() + ".csv", "text/csv;charset=utf-8");
+}
+
+function printWinners() {
+    if (!hasWinners()) return;
+    window.print();
+}
 
 // إعادة القرعة من البداية
 function resetLottery() {
-
-    if (!confirm("هل تريد إعادة القرعة من البداية؟")) {
-        return;
-    }
-
-    // إعادة تحميل الصفحة
+    if (!confirm("هل تريد إعادة القرعة من البداية؟\n(سيتم مسح جميع البيانات، احفظ الفائزين أولاً)")) return;
     location.reload();
 }
 
